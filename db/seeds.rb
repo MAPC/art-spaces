@@ -1,7 +1,57 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'faraday'
+
+def get_spaces(offset=nil)
+  params = { pageSize: 100,
+             view: 'Full',
+             fields:  ['Space ID', 'Site ID [Link to Sites]', 'Space Name (To Edit)', 'Space Description (To Edit)']}
+  params[:offset] = offset if offset
+
+  response = Faraday.get('https://api.airtable.com/v0/appguBbdw1fVlzl9z/Spaces',
+                         params,
+                         { Authorization: "Bearer #{ENV['AIRTABLE_API_KEY']}" })
+
+  JSON.parse(response.body)['records'].each do |record|
+    Space.create(airtable_id: record['id'],
+                 space_id: record['fields']['Space ID'],
+                 site_id: record['fields']['Site ID [Link to Sites]'][0],
+                 space_name: record['fields']['Space Name (To Edit)'],
+                 space_description: record['fields']['Space Description (To Edit)'])
+  end
+
+  if JSON.parse(response.body)['offset']
+    print '.'
+    get_spaces(JSON.parse(response.body)['offset'])
+  else
+    puts 'Done!'
+    return true
+  end
+end
+
+def get_sites(offset=nil)
+  params = { pageSize: 100,
+             view: 'Grid view',
+             fields:  ['Site ID','Site Name (To Edit)','Associated Address(es)']}
+  params[:offset] = offset if offset
+
+  response = Faraday.get('https://api.airtable.com/v0/appguBbdw1fVlzl9z/Sites',
+                         params,
+                         { Authorization: "Bearer #{ENV['AIRTABLE_API_KEY']}" })
+
+  JSON.parse(response.body)['records'].each do |record|
+    Site.create(airtable_id: record['id'],
+                site_id: record['fields']['Site ID'],
+                site_name: record['fields']['Site Name (To Edit)'],
+                address: record['fields']['Associated Address(es)'])
+  end
+
+  if JSON.parse(response.body)['offset']
+    print '.'
+    get_sites(JSON.parse(response.body)['offset'])
+  else
+    puts 'Done!'
+    return true
+  end
+end
+
+get_spaces
+get_sites

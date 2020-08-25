@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Airtable:</strong>
+  <%= @space.airtable_id %>
+</p>
+
+<p>
+  <strong>Space:</strong>
+  <%= @space.space_id %>
+</p>
+
+<p>
+  <strong>Site:</strong>
+  <%= @space.site_id %>
+</p>
+
+<p>
+  <strong>Space name:</strong>
+  <%= @space.space_name %>
+</p>
+
+<p>
+  <strong>Space description:</strong>
+  <%= @space.space_description %>
+</p>
+
+<%= link_to 'Edit', edit_space_path(@space) %> |
+<%= link_to 'Back', spaces_path %>
