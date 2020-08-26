@@ -41,7 +41,8 @@ def get_sites(offset=nil)
     Site.create(airtable_id: record['id'],
                 site_id: record['fields']['Site ID'],
                 site_name: record['fields']['Site Name (To Edit)'],
-                address: record['fields']['Associated Address(es)'])
+                address: record['fields']['Associated Address(es)'][0],
+                location: geocode(record['fields']['Associated Address(es)'][0]))
   end
 
   if JSON.parse(response.body)['offset']
@@ -51,6 +52,22 @@ def get_sites(offset=nil)
     puts 'Done!'
     return true
   end
+end
+
+def geocode(address)
+  sleep(0.5)
+  response = Faraday.get('https://pelias.mapc.org/v1/search',
+                         {
+                           text: address,
+                           'boundary.gid': 'whosonfirst:region:85688645',
+                           size: 1
+                         })
+  return nil if JSON.parse(response.body)['features'].size === 0
+  return 'POINT(' +
+         JSON.parse(response.body)['features'][0]['geometry']['coordinates'][0].to_s +
+         ' ' +
+         JSON.parse(response.body)['features'][0]['geometry']['coordinates'][1].to_s +
+         ')'
 end
 
 get_spaces

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_24_210921) do
+ActiveRecord::Schema.define(version: 2020_08_25_185824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 2020_08_24_210921) do
     t.string "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.index ["location"], name: "index_sites_on_location", using: :gist
   end
 
   create_table "spaces", force: :cascade do |t|
