@@ -6,6 +6,7 @@ ruby '2.7.1'
 gem 'activerecord-postgis-adapter'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faraday'
+gem 'graphql'
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.1'
@@ -13,6 +14,7 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 gem 'sass-rails', '>= 6'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'webpacker', '~> 4.0'
+gem 'rgeo-geojson'
 
 group :development, :test do
   gem 'dotenv-rails'
@@ -25,6 +27,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'graphiql-rails'
   gem 'guard-rspec'
   gem 'listen', '~> 3.2'
   gem 'rb-fsevent'
