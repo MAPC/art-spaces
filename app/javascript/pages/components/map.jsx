@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import ReactMapGL from 'react-map-gl';
 import '../../styles/map.scss';
+import { useQuery, gql } from '@apollo/client';
+
+const SITES = gql`
+  query GetSites {
+    sites {
+      siteName
+      location
+    }
+  }
+`;
 
 export default class Map extends Component {
-
   state = {
     viewport: {
       latitude: 42.3601,
@@ -11,6 +20,11 @@ export default class Map extends Component {
       zoom: 10
     }
   };
+
+  componentDidMount() {
+    const { loading, error, data } = useQuery(SITES);
+  }
+
 
   render() {
     return (
