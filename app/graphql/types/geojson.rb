@@ -8,7 +8,7 @@ class Types::Geojson < Types::BaseScalar
       # It's valid, return the URI object
       url
     else
-      raise GraphQL::CoercionError, "#{input_value.inspect} is not a valid URL"
+      raise GraphQL::CoercionError, "#{input_value.inspect} is not a valid GeoJSON object"
     end
   end
 

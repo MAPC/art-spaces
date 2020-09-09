@@ -1,18 +1,16 @@
-class Types::Featurecollection < Types::BaseScalar
-  description "A valid GeoJSON object"
+module Types
+  class FeatureCollection < Types::BaseObject
+    description "A valid GeoJSON FeatureCollection."
 
-  def self.coerce_input(input_value, context)
-    # Parse the incoming object into a `URI`
-    url = URI.parse(input_value)
-    if url.is_a?(URI::HTTP) || url.is_a?(URI::HTTPS)
-      # It's valid, return the URI object
-      url
-    else
-      raise GraphQL::CoercionError, "#{input_value.inspect} is not a valid URL"
+    field :type, String, null: false
+    field :features, [Feature], null: false
+
+    def type
+      'FeatureCollection'
     end
-  end
 
-  def self.coerce_result(ruby_value, context)
-    RGeo::GeoJSON.encode(ruby_value)
+    def features
+      Site.all
+    end
   end
 end

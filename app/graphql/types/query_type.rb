@@ -1,7 +1,7 @@
 module Types
   class QueryType < Types::BaseObject
-    field :sites, [SiteType], null: false do
-      description "List all sites."
+    field :sites, FeatureCollection, null: false do
+      description "List all sites in GeoJSON."
     end
 
     field :site, SiteType, null: true do

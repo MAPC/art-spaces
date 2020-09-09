@@ -6,6 +6,7 @@ import { useQuery, gql } from '@apollo/client';
 const SITES = gql`
   query GetSites {
     sites {
+      id
       siteName
       location
     }
