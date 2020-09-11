@@ -5,8 +5,10 @@ import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
-  cache: new InMemoryCache()
+  uri: location.href + '/graphql',
+  cache: new InMemoryCache(),
+  headers : { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+  }
 });
 
 const App = () => (
