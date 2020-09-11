@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactMapGL, {Source, Layer} from 'react-map-gl';
-import '../../styles/map.scss';
+import 'styles/map.scss';
 import { useQuery, gql } from '@apollo/client';
 
 const SITES = gql`

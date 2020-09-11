@@ -1,5 +1,6 @@
 import React from 'react';
 import Map from './components/map';
+import Header from './components/header';
 
 import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
@@ -14,6 +15,7 @@ const client = new ApolloClient({
 const App = () => (
   <>
     <ApolloProvider client={client}>
+      <Header />
       <Map />
     </ApolloProvider>
   </>
