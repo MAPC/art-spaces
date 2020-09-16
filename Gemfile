@@ -27,6 +27,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'capistrano', '~> 3.14', require: false
   gem 'graphiql-rails'
   gem 'guard-rspec'
   gem 'listen', '~> 3.2'
