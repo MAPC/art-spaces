@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   end
   post "/graphql", to: "graphql#execute"
   root 'pages#index'
+  get 'about', to: 'pages#index'
 end

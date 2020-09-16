@@ -25,6 +25,11 @@ server "staging.art-spaces.mapc.org", user: "art-spaces", roles: %w{app db web}
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
+set :branch, 'develop'
+set :rvm_custom_path, '/usr/share/rvm'
+set :rvm_ruby_version, '2.7.1'
+set :passenger_restart_command, 'passenger-config restart-app'
+
 # Custom SSH Options
 # ==================
 # You may pass any option but keep in mind that net/ssh understands a
