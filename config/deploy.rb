@@ -2,7 +2,7 @@
 lock '~> 3.14.1'
 
 set :application, 'art-spaces'
-set :repo_url, 'git@github.com:mapc/art-spaces.git'
+set :repo_url, 'git@github.com:MAPC/art-spaces.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
