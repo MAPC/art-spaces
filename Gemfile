@@ -27,11 +27,13 @@ group :development, :test do
 end
 
 group :development do
+  gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
   gem 'capistrano', '~> 3.14', require: false
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
   gem 'capistrano-rails', '~> 1.3', require: false
   gem 'capistrano-rvm'
+  gem 'ed25519', '>= 1.2', '< 2.0'
   gem 'graphiql-rails'
   gem 'guard-rspec'
   gem 'listen', '~> 3.2'
