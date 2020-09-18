@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_185824) do
+ActiveRecord::Schema.define(version: 2020_09_18_150259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,11 @@ ActiveRecord::Schema.define(version: 2020_08_25_185824) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.string "description"
+    t.integer "count_of_spaces"
+    t.string "vision_db_link"
+    t.string "zillow_link"
+    t.string "organization_link"
     t.index ["location"], name: "index_sites_on_location", using: :gist
   end
 
