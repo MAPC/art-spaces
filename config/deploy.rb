@@ -45,6 +45,12 @@ append :linked_dirs,
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+
+set :rvm_ruby_version, '2.7.2'
+set :nvm_type, :user
+set :nvm_node, 'v15.4.0'
+set :nvm_map_bins, %w{node npm yarn rake}
+
 before 'deploy:assets:precompile', 'deploy:yarn_install'
 namespace :deploy do
   desc 'Run rake yarn install'

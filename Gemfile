@@ -33,6 +33,7 @@ group :development do
   gem 'capistrano-passenger'
   gem 'capistrano-rails', '~> 1.3', require: false
   gem 'capistrano-rvm'
+  gem 'capistrano-nvm'
   gem 'ed25519', '>= 1.2', '< 2.0'
   gem 'graphiql-rails'
   gem 'guard-rspec'
