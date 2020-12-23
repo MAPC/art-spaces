@@ -30,7 +30,7 @@ end
 def get_sites(offset=nil)
   params = { pageSize: 100,
              view: 'Grid view',
-             fields:  ['Site ID','Site Name (To Edit)','Associated Address(es)', 'Site Description (To Edit)', 'Count of Spaces']}
+             fields:  ['Site ID','Site Name (To Edit)','Associated Address(es)', 'Site Description (To Edit)', 'Count of Spaces', 'Street Number(s)', 'Street Name(s)']}
   params[:offset] = offset if offset
 
   response = Faraday.get('https://api.airtable.com/v0/appguBbdw1fVlzl9z/Sites',
@@ -38,13 +38,14 @@ def get_sites(offset=nil)
                          { Authorization: "Bearer #{Rails.application.credentials.airtable_api_key}" })
                          
   JSON.parse(response.body)['records'].each do |record|
+    next if record['fields']['Street Number(s)'].blank? || record['fields']['Street Name(s)'].blank? 
     Site.create(airtable_id: record['id'],
                 site_id: record['fields']['Site ID'],
                 site_name: record['fields']['Site Name (To Edit)'],
                 address: record['fields']['Associated Address(es)'],
                 description: record['fields']['Site Description (To Edit)'],
                 count_of_spaces: record['fields']['Count of Spaces'],
-                location: geocode(record['fields']['Associated Address(es)']))
+                location: geocode(record['fields']['Associated Address(es)'][0]))
   end
 
   if JSON.parse(response.body)['offset']
