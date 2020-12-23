@@ -6,10 +6,10 @@ def get_spaces(offset=nil)
              fields:  ['Space ID', 'Site ID [Link to Sites]', 'Space Name (To Edit)', 'Space Description (To Edit)']}
   params[:offset] = offset if offset
 
-  response = Faraday.get('https://api.airtable.com/v0/appAb0MHxB8znuYpt/Table%201',
+  response = Faraday.get('https://api.airtable.com/v0/appguBbdw1fVlzl9z/Spaces',
                          params,
                          { Authorization: "Bearer #{Rails.application.credentials.airtable_api_key}" })
-
+                         
   JSON.parse(response.body)['records'].each do |record|
     Space.create(airtable_id: record['id'],
                  space_id: record['fields']['Space ID'],
@@ -30,23 +30,20 @@ end
 def get_sites(offset=nil)
   params = { pageSize: 100,
              view: 'Grid view',
-             fields:  ['Site ID','Site Name','Associated Address(es)', 'Site Description', 'Count of Spaces', 'Vision DB Link', 'Zillow / Loopnet Link', 'Organization Link']}
+             fields:  ['Site ID','Site Name (To Edit)','Associated Address(es)', 'Site Description (To Edit)', 'Count of Spaces']}
   params[:offset] = offset if offset
 
-  response = Faraday.get('https://api.airtable.com/v0/appAb0MHxB8znuYpt/Table%201',
+  response = Faraday.get('https://api.airtable.com/v0/appguBbdw1fVlzl9z/Sites',
                          params,
                          { Authorization: "Bearer #{Rails.application.credentials.airtable_api_key}" })
-
+                         
   JSON.parse(response.body)['records'].each do |record|
     Site.create(airtable_id: record['id'],
                 site_id: record['fields']['Site ID'],
-                site_name: record['fields']['Site Name'],
+                site_name: record['fields']['Site Name (To Edit)'],
                 address: record['fields']['Associated Address(es)'],
-                description: record['fields']['Site Description'],
+                description: record['fields']['Site Description (To Edit)'],
                 count_of_spaces: record['fields']['Count of Spaces'],
-                vision_db_link: record['fields']['Vision DB Link'],
-                zillow_link: record['fields']['Zillow / Loopnet Link'],
-                organization_link: record['fields']['Organization Link'],
                 location: geocode(record['fields']['Associated Address(es)']))
   end
 
@@ -74,6 +71,5 @@ def geocode(address)
          JSON.parse(response.body)['features'][0]['geometry']['coordinates'][1].to_s +
          ')'
 end
-
-# get_spaces
+get_spaces
 get_sites
