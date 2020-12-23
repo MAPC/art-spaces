@@ -8,7 +8,7 @@ def get_spaces(offset=nil)
 
   response = Faraday.get('https://api.airtable.com/v0/appAb0MHxB8znuYpt/Table%201',
                          params,
-                         { Authorization: "Bearer #{ENV['AIRTABLE_API_KEY']}" })
+                         { Authorization: "Bearer #{Rails.application.credentials.airtable_api_key}" })
 
   JSON.parse(response.body)['records'].each do |record|
     Space.create(airtable_id: record['id'],
@@ -35,7 +35,7 @@ def get_sites(offset=nil)
 
   response = Faraday.get('https://api.airtable.com/v0/appAb0MHxB8znuYpt/Table%201',
                          params,
-                         { Authorization: "Bearer #{ENV['AIRTABLE_API_KEY']}" })
+                         { Authorization: "Bearer #{Rails.application.credentials.airtable_api_key}" })
 
   JSON.parse(response.body)['records'].each do |record|
     Site.create(airtable_id: record['id'],
